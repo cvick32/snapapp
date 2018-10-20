@@ -4,8 +4,10 @@
   "private": true,
   "dependencies": {
     "ajv": "^6.5.4",
+    "postinstall": "^0.4.2",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
+    "react-flip-move": "^3.0.3",
     "react-scripts": "2.0.5",
     "unsplash-js": "^4.8.0",
     "url-parse": "^1.4.3"
