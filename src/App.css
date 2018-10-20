@@ -1,6 +1,6 @@
 .App {
   text-align: center;
-  background-color: #282c34;
+  background-color: #001f3f;
 }
 
 .container {
@@ -15,4 +15,12 @@ img {
   padding: 20px;
 }
 
+a {
+  color: #0074D9;
+}
+ 
+h1 {
+  color: #effbff;
+  font-family: "Niramit", Times, serif; 
+}
 
