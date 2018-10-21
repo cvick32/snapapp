@@ -7,14 +7,15 @@ const endPoint = "https://api.unsplash.com/photos/random?count=25&client_id=" + 
 export default class App extends Component {
 
   state = {
-      images : []
+      images : [],
+      hasError: false,
+      errorMessage : ""
   };
 
   query = '';
   trackQuery = this.trackQuery.bind(this);
   search = this.search.bind(this);
    
-
   trackQuery(ev) {
     this.query = ev.target.value;
   }
@@ -22,9 +23,15 @@ export default class App extends Component {
   search() {
     fetch(`${endPoint}&query=${this.query}`)
       .then(response => {
-        return response.json()
+        if (!response.ok) {
+          this.setState({
+            hasError : true,
+            errorMessage : response.status
+          });
+        } else {
+          return response.json()
+        }
       }).then(responseJson => {
-        console.log(responseJson)
         this.setState({
           images : responseJson
         })
@@ -32,14 +39,18 @@ export default class App extends Component {
   }
 
   displayImages() {
-    return this.state.images.map(image => {
-      return ( 
-        <figure key={image.id} class="imageInfo">
-          <img key={image.id} src={image.urls.thumb} />
-          <a href={image.user.links.html}><figcaption>{image.user.username}</figcaption></a>
-        </figure>
-        );
-    })
+    if (this.state.hasError) {
+      return <h1> Something went wrong: <br/> {this.state.errorMessage}</h1>
+    } else {
+      return this.state.images.map(image => {
+        return ( 
+          <figure key={image.id} class="imageInfo">
+            <img key={image.id} src={image.urls.thumb} />
+            <a href={image.user.links.html}><figcaption>{image.user.username}</figcaption></a>
+          </figure>
+          );
+      })
+    }
   }
 
   render() {
@@ -47,7 +58,7 @@ export default class App extends Component {
       <div className="App">     
         <link href="https://fonts.googleapis.com/css?family=Niramit" rel="stylesheet" />
         <header>
-          <h1>Cole Vick: SnapApp Project</h1>
+          <h1>Cole Vick <br/> SnapApp Project</h1>
         </header>
         <input type="text" onChange={this.trackQuery} /><br />
         <button onClick={this.search}>Search</button>
@@ -58,5 +69,3 @@ export default class App extends Component {
     );
   }
 }
-
-
