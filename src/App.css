@@ -10,6 +10,7 @@
   grid-gap: 5px;
   grid-template-columns: auto auto auto;
   padding: 10px;
+  text-align: center;
 }
 
 img {
