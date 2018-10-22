@@ -21,6 +21,7 @@ export default class App extends Component {
   }
 
   search() {
+    this.setState({ hasError : false, errorMessage : ""});
     fetch(`${endPoint}&query=${this.query}`)
       .then(response => {
         if (!response.ok) {
@@ -32,13 +33,18 @@ export default class App extends Component {
           return response.json()
         }
       }).then(responseJson => {
-        this.setState({
-          images : responseJson
-        })
+        if (this.state.hasError) {
+          return;
+        } else {
+          this.setState({
+            images : responseJson
+          })
+        }
       })
   }
 
   displayImages() {
+    console.log(this.state);
     if (this.state.hasError) {
       return <h1> Something went wrong: <br/> {this.state.errorMessage}</h1>
     } else {
